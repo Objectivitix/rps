@@ -57,3 +57,6 @@ function game() {
   if (playerScore === computerScore) console.log(GAME_TIE_MESSAGE);
   console.log(FINAL_SCORE(playerScore, computerScore));
 }
+
+const button = document.querySelector("button");
+button.addEventListener("click", game);
