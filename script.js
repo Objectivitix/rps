@@ -1,6 +1,8 @@
 import {
-  PLAYER_MOVE_PROMPT, ROUND_TIE_MESSAGE, ROUND_WIN_MESSAGE, ROUND_LOSE_MESSAGE,
-  GAME_TIE_MESSAGE, GAME_WIN_MESSAGE, GAME_LOSE_MESSAGE, FINAL_SCORE,
+  ROUND_TIE_MESSAGE, ROUND_WIN_MESSAGE, ROUND_LOSE_MESSAGE,
+  GAME_TIE_MESSAGE, GAME_WIN_MESSAGE, GAME_LOSE_MESSAGE,
+  GAME_MESSAGE_STYLE, PLAYER_MOVE_PROMPT, FINAL_SCORE,
+  FINAL_SCORE_STYLE,
 } from "./strings.js";
 
 const MOVES = ["Rock", "Paper", "Scissors"];
@@ -28,6 +30,7 @@ function playRound(playerMove, computerMove) {
 }
 
 function game() {
+  console.clear();
   let playerScore = 0, computerScore = 0;
 
   for (let i = 0; i < 3; i++) {
@@ -46,16 +49,18 @@ function game() {
     }
 
     if (playerScore === 2) {
-      console.log(GAME_WIN_MESSAGE);
+      console.log(GAME_WIN_MESSAGE, GAME_MESSAGE_STYLE);
       break;
     } else if (computerScore === 2) {
-      console.log(GAME_LOSE_MESSAGE);
+      console.log(GAME_LOSE_MESSAGE, GAME_MESSAGE_STYLE);
       break;
     }
   }
 
-  if (playerScore === computerScore) console.log(GAME_TIE_MESSAGE);
-  console.log(FINAL_SCORE(playerScore, computerScore));
+  if (playerScore === computerScore)
+    console.log(GAME_TIE_MESSAGE, GAME_MESSAGE_STYLE);
+
+  console.log(FINAL_SCORE(playerScore, computerScore), FINAL_SCORE_STYLE);
 }
 
 const button = document.querySelector("button");
