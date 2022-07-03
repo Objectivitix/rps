@@ -1,3 +1,8 @@
+import {
+  PLAYER_MOVE_PROMPT, ROUND_TIE_MESSAGE, ROUND_WIN_MESSAGE, ROUND_LOSE_MESSAGE,
+  GAME_TIE_MESSAGE, GAME_WIN_MESSAGE, GAME_LOSE_MESSAGE, FINAL_SCORE,
+} from "./strings.js";
+
 const MOVES = ["Rock", "Paper", "Scissors"];
 
 function capitalise(str) {
@@ -23,32 +28,32 @@ function playRound(playerMove, computerMove) {
 }
 
 function game() {
-  let playerScore = computerScore = 0;
+  let playerScore = 0, computerScore = 0;
 
   for (let i = 0; i < 3; i++) {
-    const playerMove = capitalise(prompt("Choose your move (rock, paper, or scissors)!"));
+    const playerMove = capitalise(prompt(PLAYER_MOVE_PROMPT));
     const computerMove = computerPlay();
     const result = playRound(playerMove, computerMove)
 
     if (result === "tie") {
-      console.log(`Close one! ${playerMove} ties with ${computerMove}!`);
+      console.log(ROUND_TIE_MESSAGE(playerMove, computerMove));
     } else if (result === "win") {
-      console.log(`You won! ${playerMove} beats ${computerMove}!`);
+      console.log(ROUND_WIN_MESSAGE(playerMove, computerMove));
       playerScore++;
     } else {
-      console.log(`You lost... ${computerMove} beats ${playerMove}.`);
+      console.log(ROUND_LOSE_MESSAGE(playerMove, computerMove));
       computerScore++;
     }
 
     if (playerScore === 2) {
-      console.log("AND THAT'S VICTORY!!!");
+      console.log(GAME_WIN_MESSAGE);
       break;
     } else if (computerScore === 2) {
-      console.log("Darn... tough game!");
+      console.log(GAME_LOSE_MESSAGE);
       break;
     }
   }
 
-  if (playerScore === computerScore) console.log("Tied! That was close!");
-  console.log(`Final score: ${playerScore}-${computerScore}`)
+  if (playerScore === computerScore) console.log(GAME_TIE_MESSAGE);
+  console.log(FINAL_SCORE(playerScore, computerScore));
 }
