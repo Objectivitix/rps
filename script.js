@@ -64,7 +64,7 @@ function playRound(playerMove, computerMove) {
 function onClick(evt) {
   evt.target.classList.add("active");
 
-  const playerMove = capitalise(evt.target.className);
+  const playerMove = capitalise(evt.target.classList[0]);
   const computerMove = computerPlay();
 
   if (playRound(playerMove, computerMove)) {
