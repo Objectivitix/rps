@@ -5,18 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script type="module" src="script.js" defer></script>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./script.js" defer></script>
   </head>
   <body>
-    <button class="rock">ROCK</button>
-    <button class="paper">PAPER</button>
-    <button class="scissors">SCISSORS</button>
-    <p class="round-result"></p>
-    <p class="scores">
-      Score:
-      <span class="player-score">0</span> -&#32;
-      <span class="computer-score">0</span>
-    </p>
-    <p class="game-result"></p>
+    <div class="intro">
+      <h1>
+        <span class="shrek">Shrek</span>
+        <span class="morb">Morb</span>
+        <span class="minion">Minion</span>
+      </h1>
+      <p class="instructions">
+        <span class="minion">Minion</span> beats <span class="morb">Morb</span>,
+        <span class="morb">Morb</span> beats <span class="shrek">Shrek</span>,
+        <span class="shrek">Shrek</span> beats <span class="minion">Minion</span>
+      </p>
+    </div>
+
+    <div class="buttons">
+      <img class="shrek" src="./images/shrek.jpg">
+      <img class="morb" src="./images/morb.jpg">
+      <img class="minion" src="./images/minion.jpg">
+    </div>
+
+    <div class="results">
+      <p class="scores">
+        Score:
+        <span class="player-score">0</span> -
+        <span class="computer-score">0</span>
+      </p>
+      <p class="round-result"></p>
+      <p class="game-result"></p>
+    </div>
   </body>
 </html>

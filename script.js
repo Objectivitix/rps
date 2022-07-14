@@ -3,13 +3,13 @@ import {
   GAME_WIN_MESSAGE, GAME_LOSE_MESSAGE,
 } from "./strings.js";
 
-const MOVES = ["Rock", "Paper", "Scissors"];
+const MOVES = ["Shrek", "Morb", "Minion"];
 const ROUND_RESULT_MESSAGES = {
   "tie": ROUND_TIE_MESSAGE,
   "win": ROUND_WIN_MESSAGE,
   "lose": ROUND_LOSE_MESSAGE,
 }
-const buttons = document.querySelectorAll("button");
+const buttons = document.querySelectorAll(".buttons > img");
 
 function capitalise(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -21,9 +21,9 @@ function computerPlay() {
 
 function playerWins(p, c) {
   return (
-    p === "Rock" && c === "Scissors" ||
-    p === "Paper" && c === "Rock" ||
-    p === "Scissors" && c === "Paper"
+    p === "Shrek" && c === "Minion" ||
+    p === "Morb" && c === "Shrek" ||
+    p === "Minion" && c === "Morb"
   );
 }
 
@@ -51,13 +51,19 @@ function playRound(playerMove, computerMove) {
   }
 
   const roundResultDisplay = document.querySelector(".round-result");
-  const roundMsg = ROUND_RESULT_MESSAGES[roundResult];
-  roundResultDisplay.textContent = roundMsg(playerMove, computerMove);
+  const roundMsg =
+    ROUND_RESULT_MESSAGES[roundResult](playerMove, computerMove)
+    .replace("Shrek", "<span class='shrek'>Shrek</span>")
+    .replace("Morb", "<span class='morb'>Morb</span>")
+    .replace("Minion", "<span class='minion'>Minion</span>");
+  roundResultDisplay.innerHTML = roundMsg;
 
   return victoryDecided;
 }
 
 function onClick(evt) {
+  evt.target.classList.add("active");
+
   const playerMove = capitalise(evt.target.className);
   const computerMove = computerPlay();
 
@@ -66,4 +72,12 @@ function onClick(evt) {
   }
 }
 
-buttons.forEach(button => button.addEventListener("click", onClick));
+function removeActiveClass(evt) {
+  if (evt.propertyName !== "opacity") return;
+  evt.target.classList.remove("active");
+}
+
+buttons.forEach(button => {
+  button.addEventListener("click", onClick);
+  button.addEventListener("transitionend", removeActiveClass)
+});
