@@ -53,9 +53,9 @@ function playRound(playerMove, computerMove) {
   const roundResultDisplay = document.querySelector(".round-result");
   const roundMsg =
     ROUND_RESULT_MESSAGES[roundResult](playerMove, computerMove)
-    .replace("Shrek", "<span class='shrek'>Shrek</span>")
-    .replace("Morb", "<span class='morb'>Morb</span>")
-    .replace("Minion", "<span class='minion'>Minion</span>");
+    .replace(/Shrek/g, "<span class='shrek'>Shrek</span>")
+    .replace(/Morb/g, "<span class='morb'>Morb</span>")
+    .replace(/Minion/g, "<span class='minion'>Minion</span>");
   roundResultDisplay.innerHTML = roundMsg;
 
   return victoryDecided;
