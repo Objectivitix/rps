@@ -1,11 +1,16 @@
 import {
   ROUND_TIE_MESSAGE, ROUND_WIN_MESSAGE, ROUND_LOSE_MESSAGE,
   GAME_TIE_MESSAGE, GAME_WIN_MESSAGE, GAME_LOSE_MESSAGE,
-  GAME_MESSAGE_STYLE, PLAYER_MOVE_PROMPT, FINAL_SCORE,
-  FINAL_SCORE_STYLE,
+  GAME_MESSAGE_STYLE, FINAL_SCORE, FINAL_SCORE_STYLE,
 } from "./strings.js";
 
 const MOVES = ["Rock", "Paper", "Scissors"];
+
+const ROUND_RESULT_MESSAGES = {
+  "tie": ROUND_TIE_MESSAGE,
+  "win": ROUND_WIN_MESSAGE,
+  "lose": ROUND_LOSE_MESSAGE,
+}
 
 function capitalise(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -24,44 +29,29 @@ function playerWins(p, c) {
 }
 
 function playRound(playerMove, computerMove) {
-  if (playerMove === computerMove) return "tie";
-  else if (playerWins(playerMove, computerMove)) return "win";
-  else return "lose";
-}
+  let result;
 
-function game() {
-  console.clear();
-  let playerScore = 0, computerScore = 0;
-
-  for (let i = 0; i < 3; i++) {
-    const playerMove = capitalise(prompt(PLAYER_MOVE_PROMPT));
-    const computerMove = computerPlay();
-    const result = playRound(playerMove, computerMove)
-
-    if (result === "tie") {
-      console.log(ROUND_TIE_MESSAGE(playerMove, computerMove));
-    } else if (result === "win") {
-      console.log(ROUND_WIN_MESSAGE(playerMove, computerMove));
-      playerScore++;
-    } else {
-      console.log(ROUND_LOSE_MESSAGE(playerMove, computerMove));
-      computerScore++;
-    }
-
-    if (playerScore === 2) {
-      console.log(GAME_WIN_MESSAGE, GAME_MESSAGE_STYLE);
-      break;
-    } else if (computerScore === 2) {
-      console.log(GAME_LOSE_MESSAGE, GAME_MESSAGE_STYLE);
-      break;
-    }
+  if (playerMove === computerMove) {
+    result = "tie";
+  } else if (playerWins(playerMove, computerMove)) {
+    result = "win";
+    document.getElementById("player-score").textContent++;
+  } else {
+    result = "lose";
+    document.getElementById("computer-score").textContent++;
   }
 
-  if (playerScore === computerScore)
-    console.log(GAME_TIE_MESSAGE, GAME_MESSAGE_STYLE);
-
-  console.log(FINAL_SCORE(playerScore, computerScore), FINAL_SCORE_STYLE);
+  const para = document.getElementById("result");
+  const roundMsg = ROUND_RESULT_MESSAGES[result];
+  para.textContent = roundMsg(playerMove, computerMove);
 }
 
-const button = document.querySelector("button");
-button.addEventListener("click", game);
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach(
+  button => button.addEventListener("click", () => {
+    const playerMove = capitalise(button.className);
+    const computerMove = computerPlay();
+    console.log(playRound(playerMove, computerMove));
+  })
+);

@@ -5,11 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script type="module" src="script.js" defer></script>
   </head>
   <body>
-    <h1>Welcome to Scuffed Rock Paper Scissors!</h1>
-    <p>To see scoring and results, open the Developer Console.</p>
-    <button>Play the game!</button>
-    <script type="module" src="script.js"></script>
+    <button class="rock">ROCK</button>
+    <button class="paper">PAPER</button>
+    <button class="scissors">SCISSORS</button>
+    <p id="result"></p>
+    <p>
+      Score:
+      <span id="player-score">0</span> -&#32;
+      <span id="computer-score">0</span>
+    </p>
   </body>
 </html>
