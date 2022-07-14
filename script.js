@@ -1,16 +1,15 @@
 import {
   ROUND_TIE_MESSAGE, ROUND_WIN_MESSAGE, ROUND_LOSE_MESSAGE,
-  GAME_TIE_MESSAGE, GAME_WIN_MESSAGE, GAME_LOSE_MESSAGE,
-  GAME_MESSAGE_STYLE, FINAL_SCORE, FINAL_SCORE_STYLE,
+  GAME_WIN_MESSAGE, GAME_LOSE_MESSAGE,
 } from "./strings.js";
 
 const MOVES = ["Rock", "Paper", "Scissors"];
-
 const ROUND_RESULT_MESSAGES = {
   "tie": ROUND_TIE_MESSAGE,
   "win": ROUND_WIN_MESSAGE,
   "lose": ROUND_LOSE_MESSAGE,
 }
+const buttons = document.querySelectorAll("button");
 
 function capitalise(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -29,29 +28,42 @@ function playerWins(p, c) {
 }
 
 function playRound(playerMove, computerMove) {
-  let result;
+  const gameResultDisplay = document.querySelector(".game-result");
+  let victoryDecided = false;
 
+  let roundResult;
   if (playerMove === computerMove) {
-    result = "tie";
+    roundResult = "tie";
   } else if (playerWins(playerMove, computerMove)) {
-    result = "win";
-    document.getElementById("player-score").textContent++;
+    roundResult = "win";
+    const playerScoreDisplay = document.querySelector(".player-score")
+    if (++playerScoreDisplay.textContent === 5) {
+      gameResultDisplay.textContent = GAME_WIN_MESSAGE;
+      victoryDecided = true;
+    }
   } else {
-    result = "lose";
-    document.getElementById("computer-score").textContent++;
+    roundResult = "lose";
+    const computerScoreDisplay = document.querySelector(".computer-score")
+    if (++computerScoreDisplay.textContent === 5) {
+      gameResultDisplay.textContent = GAME_LOSE_MESSAGE;
+      victoryDecided = true;
+    }
   }
 
-  const para = document.getElementById("result");
-  const roundMsg = ROUND_RESULT_MESSAGES[result];
-  para.textContent = roundMsg(playerMove, computerMove);
+  const roundResultDisplay = document.querySelector(".round-result");
+  const roundMsg = ROUND_RESULT_MESSAGES[roundResult];
+  roundResultDisplay.textContent = roundMsg(playerMove, computerMove);
+
+  return victoryDecided;
 }
 
-const buttons = document.querySelectorAll("button");
+function onClick(evt) {
+  const playerMove = capitalise(evt.target.className);
+  const computerMove = computerPlay();
 
-buttons.forEach(
-  button => button.addEventListener("click", () => {
-    const playerMove = capitalise(button.className);
-    const computerMove = computerPlay();
-    console.log(playRound(playerMove, computerMove));
-  })
-);
+  if (playRound(playerMove, computerMove)) {
+    buttons.forEach(button => button.removeEventListener("click", onClick));
+  }
+}
+
+buttons.forEach(button => button.addEventListener("click", onClick));
