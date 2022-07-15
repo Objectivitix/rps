@@ -1,5 +1,11 @@
 export const MOVES = ["Shrek", "Morb", "Minion"];
 
+export const IMAGE_PATHS = {
+  "Shrek": "./images/shrek.jpg",
+  "Morb": "./images/morb.jpg",
+  "Minion": "./images/minion.jpg",
+};
+
 export const ROUND_RESULT_MESSAGE = (result, playerMove, computerMove) => (
   (result === "tie") ? `Close one! ${playerMove} ties with ${computerMove}!` :
   (result === "win") ? `You won! ${playerMove} beats ${computerMove}!` :

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Splash&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500&family=Splash&display=swap');
 
 body {
   font-family: "Inter", sans-serif;
@@ -17,12 +17,12 @@ h1 {
   font-size: 56px;
   font-family: "Splash", cursive;
   font-weight: normal;
-  margin: 0 0 3px 0;
+  margin: 0;
 }
 
 .instructions {
   font-size: 22px;
-  font-weight: normal;
+  font-weight: 300;
   margin: 0;
 }
 
@@ -34,7 +34,28 @@ h1 {
 .buttons > img {
   width: 200px;
   height: auto;
+  border-radius: 10px;
   transition: all 200ms ease-out;
+}
+
+.main {
+  display: flex;
+  gap: 40px;
+}
+
+.computer-selection {
+  font-weight: 300;
+  margin: 0;
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.computer-selection > img {
+  width: 120px;
+  height: auto;
 }
 
 .buttons > img:hover {
@@ -48,6 +69,7 @@ h1 {
 }
 
 .results {
+  font-weight: 500;
   height: 80px;
   display: flex;
   flex-direction: column;

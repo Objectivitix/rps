@@ -1,5 +1,5 @@
 import {
-  MOVES, ROUND_RESULT_MESSAGE,
+  MOVES, IMAGE_PATHS, ROUND_RESULT_MESSAGE,
   GAME_WIN_MESSAGE, GAME_LOSE_MESSAGE,
 } from "./constants.js";
 
@@ -41,6 +41,14 @@ function playRound(playerMove, computerMove) {
       victoryDecided = true;
     }
   }
+
+  const selectionPara = document.querySelector(".computer-selection");
+  const image = document.createElement("img");
+  image.setAttribute("src", IMAGE_PATHS[computerMove]);
+  if (selectionPara.lastChild.nodeType === Node.ELEMENT_NODE) {
+    selectionPara.removeChild(selectionPara.lastChild);
+  }
+  selectionPara.appendChild(image);
 
   const roundResultDisplay = document.querySelector(".round-result");
   const roundMsg =
