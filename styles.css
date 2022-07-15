@@ -34,7 +34,6 @@ h1 {
 .buttons > img {
   width: 200px;
   height: auto;
-  border-radius: 10px;
   transition: all 200ms ease-out;
 }
 
@@ -68,6 +67,12 @@ h1 {
   transition: opacity 80ms ease-out;
 }
 
+.results-container {
+  gap: 32px;
+  display: flex;
+  align-items: center;
+}
+
 .results {
   font-weight: 500;
   height: 80px;
@@ -78,6 +83,18 @@ h1 {
 
 .results > p {
   margin: 0;
+}
+
+.restart-button {
+  background-color: hsl(0, 0%, 20%);
+  color: hsl(0, 0%, 90%);
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 5px;
+}
+
+.restart-button:hover {
+  background-color: hsl(0, 0%, 0%);
 }
 
 .shrek { color: hsl(133, 91%, 20%) }

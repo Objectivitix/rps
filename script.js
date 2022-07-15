@@ -61,14 +61,40 @@ function playRound(playerMove, computerMove) {
   return victoryDecided;
 }
 
-function onClick(evt) {
+function onRestartButtonClick(evt) {
+  evt.target.remove();
+
+  gameButtons.forEach(
+    button => button.addEventListener("click", onGameButtonClick)
+  );
+
+  const selectionPara = document.querySelector(".computer-selection");
+  selectionPara.removeChild(selectionPara.lastChild);
+
+  document.querySelector(".player-score").textContent = 0;
+  document.querySelector(".computer-score").textContent = "0";
+  document.querySelector(".round-result").innerHTML = "";
+  document.querySelector(".game-result").textContent = "";
+}
+
+function onGameButtonClick(evt) {
   evt.target.classList.add("active");
 
   const playerMove = capitalise(evt.target.classList[0]);
   const computerMove = computerPlay();
 
   if (playRound(playerMove, computerMove)) {
-    buttons.forEach(button => button.removeEventListener("click", onClick));
+    gameButtons.forEach(
+      button => button.removeEventListener("click", onGameButtonClick)
+    );
+
+    const restartButton = document.createElement("button");
+    restartButton.classList.add("restart-button");
+    restartButton.textContent = "Play again?";
+    const container = document.querySelector(".results-container");
+    container.appendChild(restartButton);
+
+    restartButton.addEventListener("click", onRestartButtonClick);
   }
 }
 
@@ -77,8 +103,8 @@ function removeActiveClass(evt) {
   evt.target.classList.remove("active");
 }
 
-const buttons = document.querySelectorAll(".buttons > img");
-buttons.forEach(button => {
-  button.addEventListener("click", onClick);
+const gameButtons = document.querySelectorAll(".buttons > img");
+gameButtons.forEach(button => {
+  button.addEventListener("click", onGameButtonClick);
   button.addEventListener("transitionend", removeActiveClass)
 });
