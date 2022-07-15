@@ -1,15 +1,7 @@
 import {
-  ROUND_TIE_MESSAGE, ROUND_WIN_MESSAGE, ROUND_LOSE_MESSAGE,
+  MOVES, ROUND_RESULT_MESSAGE,
   GAME_WIN_MESSAGE, GAME_LOSE_MESSAGE,
-} from "./strings.js";
-
-const MOVES = ["Shrek", "Morb", "Minion"];
-const ROUND_RESULT_MESSAGES = {
-  "tie": ROUND_TIE_MESSAGE,
-  "win": ROUND_WIN_MESSAGE,
-  "lose": ROUND_LOSE_MESSAGE,
-}
-const buttons = document.querySelectorAll(".buttons > img");
+} from "./constants.js";
 
 function capitalise(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -52,7 +44,7 @@ function playRound(playerMove, computerMove) {
 
   const roundResultDisplay = document.querySelector(".round-result");
   const roundMsg =
-    ROUND_RESULT_MESSAGES[roundResult](playerMove, computerMove)
+    ROUND_RESULT_MESSAGE(roundResult, playerMove, computerMove)
     .replace(/Shrek/g, "<span class='shrek'>Shrek</span>")
     .replace(/Morb/g, "<span class='morb'>Morb</span>")
     .replace(/Minion/g, "<span class='minion'>Minion</span>");
@@ -77,6 +69,7 @@ function removeActiveClass(evt) {
   evt.target.classList.remove("active");
 }
 
+const buttons = document.querySelectorAll(".buttons > img");
 buttons.forEach(button => {
   button.addEventListener("click", onClick);
   button.addEventListener("transitionend", removeActiveClass)
