@@ -42,13 +42,25 @@ function playRound(playerMove, computerMove) {
     }
   }
 
-  const selectionPara = document.querySelector(".computer-selection");
+  let selectionPara = document.querySelector(".computer-selection")
+  const newPara = !selectionPara;
+  if (newPara) {
+    selectionPara = document.createElement("p");
+    selectionPara.textContent = "Computer selection:";
+    selectionPara.classList.add("computer-selection");
+  }
+
   const image = document.createElement("img");
   image.setAttribute("src", IMAGE_PATHS[computerMove]);
   if (selectionPara.lastChild.nodeType === Node.ELEMENT_NODE) {
     selectionPara.removeChild(selectionPara.lastChild);
   }
   selectionPara.appendChild(image);
+
+  if (newPara) {
+    const mainDiv = document.querySelector(".main");
+    mainDiv.appendChild(selectionPara);
+  }
 
   const roundResultDisplay = document.querySelector(".round-result");
   const roundMsg =
@@ -69,7 +81,7 @@ function onRestartButtonClick(evt) {
   );
 
   const selectionPara = document.querySelector(".computer-selection");
-  selectionPara.removeChild(selectionPara.lastChild);
+  selectionPara.remove();
 
   document.querySelector(".player-score").textContent = 0;
   document.querySelector(".computer-score").textContent = "0";
