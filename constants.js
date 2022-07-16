@@ -1,3 +1,4 @@
+// MOVES must be in 2 < 0 < 1 < 2 format for playerWins to function
 export const MOVES = ["Shrek", "Morb", "Minion"];
 
 export const IMAGE_PATHS = {

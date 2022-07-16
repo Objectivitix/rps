@@ -12,11 +12,40 @@ function computerPlay() {
 }
 
 function playerWins(p, c) {
+  // MOVES is always in 2 < 0 < 1 < 2 format
   return (
-    p === "Shrek" && c === "Minion" ||
-    p === "Morb" && c === "Shrek" ||
-    p === "Minion" && c === "Morb"
+    p === MOVES[0] && c === MOVES[2] ||
+    p === MOVES[1] && c === MOVES[0] ||
+    p === MOVES[2] && c === MOVES[1]
   );
+}
+
+function colorise(text) {
+  return text
+    .replace(/Shrek/g, "<span class='shrek'>Shrek</span>")
+    .replace(/Morb/g, "<span class='morb'>Morb</span>")
+    .replace(/Minion/g, "<span class='minion'>Minion</span>");
+}
+
+function displayComputerMove() {
+  let selectionPara = document.querySelector(".computer-selection")
+  const newPara = !selectionPara;
+
+  if (newPara) {
+    selectionPara = document.createElement("p");
+    selectionPara.textContent = "Computer selection:";
+    selectionPara.classList.add("computer-selection");
+  }
+
+  const image = document.createElement("img");
+  image.src = IMAGE_PATHS[computerMove];
+  if (!newPara) selectionPara.removeChild(selectionPara.lastChild);
+  selectionPara.appendChild(image);
+
+  if (newPara) {
+    const mainDiv = document.querySelector(".main");
+    mainDiv.appendChild(selectionPara);
+  }
 }
 
 function playRound(playerMove, computerMove) {
@@ -42,33 +71,11 @@ function playRound(playerMove, computerMove) {
     }
   }
 
-  let selectionPara = document.querySelector(".computer-selection")
-  const newPara = !selectionPara;
-  if (newPara) {
-    selectionPara = document.createElement("p");
-    selectionPara.textContent = "Computer selection:";
-    selectionPara.classList.add("computer-selection");
-  }
-
-  const image = document.createElement("img");
-  image.setAttribute("src", IMAGE_PATHS[computerMove]);
-  if (selectionPara.lastChild.nodeType === Node.ELEMENT_NODE) {
-    selectionPara.removeChild(selectionPara.lastChild);
-  }
-  selectionPara.appendChild(image);
-
-  if (newPara) {
-    const mainDiv = document.querySelector(".main");
-    mainDiv.appendChild(selectionPara);
-  }
+  displayComputerMove();
 
   const roundResultDisplay = document.querySelector(".round-result");
-  const roundMsg =
-    ROUND_RESULT_MESSAGE(roundResult, playerMove, computerMove)
-    .replace(/Shrek/g, "<span class='shrek'>Shrek</span>")
-    .replace(/Morb/g, "<span class='morb'>Morb</span>")
-    .replace(/Minion/g, "<span class='minion'>Minion</span>");
-  roundResultDisplay.innerHTML = roundMsg;
+  const roundMsg = ROUND_RESULT_MESSAGE(roundResult, playerMove, computerMove);
+  roundResultDisplay.innerHTML = colorise(roundMsg);
 
   return victoryDecided;
 }
@@ -80,11 +87,10 @@ function onRestartButtonClick(evt) {
     button => button.addEventListener("click", onGameButtonClick)
   );
 
-  const selectionPara = document.querySelector(".computer-selection");
-  selectionPara.remove();
+  document.querySelector(".computer-selection").remove();
 
   document.querySelector(".player-score").textContent = 0;
-  document.querySelector(".computer-score").textContent = "0";
+  document.querySelector(".computer-score").textContent = 0;
   document.querySelector(".round-result").innerHTML = "";
   document.querySelector(".game-result").textContent = "";
 }
@@ -103,10 +109,10 @@ function onGameButtonClick(evt) {
     const restartButton = document.createElement("button");
     restartButton.classList.add("restart-button");
     restartButton.textContent = "Play again?";
+    restartButton.addEventListener("click", onRestartButtonClick);
+
     const container = document.querySelector(".results-container");
     container.appendChild(restartButton);
-
-    restartButton.addEventListener("click", onRestartButtonClick);
   }
 }
 
