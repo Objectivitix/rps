@@ -27,7 +27,7 @@ function colorise(text) {
     .replace(/Minion/g, "<span class='minion'>Minion</span>");
 }
 
-function displayComputerMove() {
+function displayComputerMove(computerMove) {
   let selectionPara = document.querySelector(".computer-selection")
   const newPara = !selectionPara;
 
@@ -71,7 +71,7 @@ function playRound(playerMove, computerMove) {
     }
   }
 
-  displayComputerMove();
+  displayComputerMove(computerMove);
 
   const roundResultDisplay = document.querySelector(".round-result");
   const roundMsg = ROUND_RESULT_MESSAGE(roundResult, playerMove, computerMove);
