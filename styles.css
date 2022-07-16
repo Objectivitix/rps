@@ -97,6 +97,10 @@ h1 {
   background-color: hsl(0, 0%, 0%);
 }
 
+.hidden {
+  display: none;
+}
+
 .shrek { color: hsl(133, 91%, 20%) }
 .morb { color: hsl(209, 91%, 20%) }
 .minion { color: hsl(54, 91%, 20%) }

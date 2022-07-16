@@ -28,24 +28,11 @@ function colorise(text) {
 }
 
 function displayComputerMove(computerMove) {
-  let selectionPara = document.querySelector(".computer-selection")
-  const newPara = !selectionPara;
+  const selectionPara = document.querySelector(".computer-selection");
+  selectionPara.classList.remove("hidden");
 
-  if (newPara) {
-    selectionPara = document.createElement("p");
-    selectionPara.textContent = "Computer selection:";
-    selectionPara.classList.add("computer-selection");
-  }
-
-  const image = document.createElement("img");
-  image.src = IMAGE_PATHS[computerMove];
-  if (!newPara) selectionPara.removeChild(selectionPara.lastChild);
-  selectionPara.appendChild(image);
-
-  if (newPara) {
-    const mainDiv = document.querySelector(".main");
-    mainDiv.appendChild(selectionPara);
-  }
+  const selectionImage = selectionPara.lastChild;
+  selectionImage.src = IMAGE_PATHS[computerMove];
 }
 
 function playRound(playerMove, computerMove) {
@@ -85,14 +72,14 @@ function onRestartButtonClick(evt) {
     button => button.addEventListener("click", onGameButtonClick)
   );
 
-  document.querySelector(".computer-selection").remove();
+  document.querySelector(".computer-selection").classList.add("hidden");
 
   document.querySelector(".player-score").textContent = 0;
   document.querySelector(".computer-score").textContent = 0;
   document.querySelector(".round-result").innerHTML = "";
   document.querySelector(".game-result").textContent = "";
 
-  evt.target.remove();
+  evt.target.classList.add("hidden");
 }
 
 function onGameButtonClick(evt) {
@@ -106,13 +93,7 @@ function onGameButtonClick(evt) {
       button => button.removeEventListener("click", onGameButtonClick)
     );
 
-    const restartButton = document.createElement("button");
-    restartButton.classList.add("restart-button");
-    restartButton.textContent = "Play again?";
-    restartButton.addEventListener("click", onRestartButtonClick);
-
-    const container = document.querySelector(".results-container");
-    container.appendChild(restartButton);
+    restartButton.classList.remove("hidden");
   }
 }
 
@@ -126,3 +107,6 @@ gameButtons.forEach(button => {
   button.addEventListener("click", onGameButtonClick);
   button.addEventListener("transitionend", removeActiveClass)
 });
+
+const restartButton = document.querySelector(".restart-button");
+restartButton.addEventListener("click", onRestartButtonClick);
