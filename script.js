@@ -49,7 +49,7 @@ function displayComputerMove(computerMove) {
 }
 
 function playRound(playerMove, computerMove) {
-  const gameResultDisplay = document.querySelector(".game-result");
+  const gameResultNode = document.querySelector(".game-result");
   let victoryDecided = false;
 
   let roundResult;
@@ -57,32 +57,30 @@ function playRound(playerMove, computerMove) {
     roundResult = "tie";
   } else if (playerWins(playerMove, computerMove)) {
     roundResult = "win";
-    const playerScoreDisplay = document.querySelector(".player-score")
-    if (++playerScoreDisplay.textContent === 5) {
-      gameResultDisplay.textContent = GAME_WIN_MESSAGE;
+    const playerScoreNode = document.querySelector(".player-score")
+    if (++playerScoreNode.textContent === 5) {
+      gameResultNode.textContent = GAME_WIN_MESSAGE;
       victoryDecided = true;
     }
   } else {
     roundResult = "lose";
-    const computerScoreDisplay = document.querySelector(".computer-score")
-    if (++computerScoreDisplay.textContent === 5) {
-      gameResultDisplay.textContent = GAME_LOSE_MESSAGE;
+    const computerScoreNode = document.querySelector(".computer-score")
+    if (++computerScoreNode.textContent === 5) {
+      gameResultNode.textContent = GAME_LOSE_MESSAGE;
       victoryDecided = true;
     }
   }
 
   displayComputerMove(computerMove);
 
-  const roundResultDisplay = document.querySelector(".round-result");
+  const roundResultNode = document.querySelector(".round-result");
   const roundMsg = ROUND_RESULT_MESSAGE(roundResult, playerMove, computerMove);
-  roundResultDisplay.innerHTML = colorise(roundMsg);
+  roundResultNode.innerHTML = colorise(roundMsg);
 
   return victoryDecided;
 }
 
 function onRestartButtonClick(evt) {
-  evt.target.remove();
-
   gameButtons.forEach(
     button => button.addEventListener("click", onGameButtonClick)
   );
@@ -93,6 +91,8 @@ function onRestartButtonClick(evt) {
   document.querySelector(".computer-score").textContent = 0;
   document.querySelector(".round-result").innerHTML = "";
   document.querySelector(".game-result").textContent = "";
+
+  evt.target.remove();
 }
 
 function onGameButtonClick(evt) {
